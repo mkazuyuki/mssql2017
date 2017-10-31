@@ -20,7 +20,7 @@
 
 4. Add *Custom Monitor Resource* to the cluster and edit genw.sh as
 
-		sqlcmd -U SA -P PASSWORD -Q "USE *TARGET_DB*; SELSCT * FROM CLPMON WHERE id = 1"|grep id"
+		sqlcmd -U SA -P PASSWORD -Q "USE *TARGET_DB*; SELSCT * FROM CLPMON WHERE id = 1"|grep id
 		$if [ $? -ne 0 ]; then
 			echo "[E] sqlcmd returns unexpected result"
 			exit 1:
