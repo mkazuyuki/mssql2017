@@ -11,15 +11,17 @@
 	2. [Install MSSQL and tools then setup.](https://docs.microsoft.com/ja-jp/sql/linux/quickstart-install-connect-red-hat)
 	3. Install ECX (SSS) then setup.
 
-3. Create a table in the Database to be monitored
+3. Create a table in the Database to be monitored by the below script
 
-	- *TARGET_DB*	= the database name to be monitored
-	- *PASSWORD*	= the password for SA user to connect the database
+		#!/bin/sh
+		# TARGET_DB	= the database name to be monitored  
+		# PASSWORD	= the password for SA user to connect the database
 
-			sqlcmd -U SA -P PASSWORD -Q "USE *TARGET_DB*; CREATE TABLE CLPMON (id INT); INSERT INTO CLPMON VALUES (1)"
+		sqlcmd -U SA -P PASSWORD -Q "USE TARGET_DB; CREATE TABLE CLPMON (id INT); INSERT INTO CLPMON VALUES (1)"
 
 4. Add *Custom Monitor Resource* to the cluster and edit genw.sh as
 
+		#!/bin/sh
 		sqlcmd -U SA -P PASSWORD -Q "USE *TARGET_DB*; SELSCT * FROM CLPMON WHERE id = 1"|grep id
 		$if [ $? -ne 0 ]; then
 			echo "[E] sqlcmd returns unexpected result"
