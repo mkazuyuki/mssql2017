@@ -31,9 +31,9 @@
 			# PASSWORD	= the password for SA user to connect the database
 
 			sqlcmd -U SA -P PASSWORD -Q "USE TARGET_DB; SELSCT * FROM CLPMON WHERE id = 1"|grep id
-			$if [ $? -ne 0 ]; then
+			if [ $? -ne 0 ]; then
 				echo "[E] sqlcmd returned unexpected result"
-				exit 1:
+				exit 1
 			fi
 
 
