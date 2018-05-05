@@ -115,7 +115,7 @@
 
 4. MSSQL Server Installation
 
-	4.1	Installing MSSQL on Primary Server
+	4.1. Installing MSSQL on Primary Server
 
 	1. Install and configure SQL Server 2017 as per requirement of the client/customer.
 
@@ -140,13 +140,13 @@
 				sudo firewall-cmd --zone=public --add-port=1433/tcp -permanent
 				sudo firewall-cmd -reload
 
-	2.	MSSQL server command line tools installation
+	2. MSSQL server command line tools installation
 
-		1.	Run Command
+		1. Run Command
 
 				sudo curl -o /etc/yum.repos.d/msprod.repo https://packages.microsoft.com/config/rhel/7/prod.repo
 
-		remove if already installed
+			remove if already installed
 
 				sudo yum remove unixODBC-utf16 unixODBC-utf16-devel
 
@@ -168,26 +168,36 @@
 
 5. ECX Installation
 
-	5.1	Install EXPRESSCLUSTER on the Primary & Standby Server (Machine 1&2)
-	a.	Install the EXPRESSCLUSTER Server RPM on all server(s) that constitute the cluster by following the procedures below.
+	5.1. Install EXPRESSCLUSTER on the Primary & Standby Server (Machine 1&2)
+
+	1. Install the EXPRESSCLUSTER Server RPM on all server(s) that constitute the cluster by following the procedures below.
+
 	Note: Log in as root user when installing the EXPRESSCLUSTER Server RPM.
-	b.	Mount the installation CD-ROM.
-	c.	Run the rpm command to install the package file. The installation RPM varies depending on the products Navigate to the folder, /Linux/3.0/en/server, in the CD-ROM and run the following:
-		rpm -i expresscls-[version].[architecture].rpm
 
-	Note: EXPRESSCLUSTER will be installed in the following directory. You will not be able to uninstall the EXPRESSCLUSTER if you change this directory. Installation Directory: /opt/nec/clusterpro
-	d.	When the installation is completed, unmount the installation CD-ROM.
-	e.	License Registration: Log on to the master server as root user and run the following command:
+	2. Mount the installation CD-ROM.
 
-	f.	clplcnsc -i <filepath> -p <PRODUCT-ID>
+	3. Run the rpm command to install the package file. The installation RPM varies depending on the products Navigate to the folder, /Linux/3.0/en/server, in the CD-ROM and run the following:
 
-	g.	When the command is successfully executed, the message "Command succeeded." is displayed in the console
+			rpm -i expresscls-[version].[architecture].rpm
 
-	Note: Here, specify the in filepath to the license file by the -i option & the productID by the -p option.
-	h.	For Base License: Enter the product ID as BASE33.  Here 33 is the EC version & this number will vary as per the EC deployed. Example for EC2.1 version, command param would become BASE21. The Base license needs to be applied on only one server
-	i.	For Replicator license: Enter the product ID as REPL33. This license should be registered on both the servers
+	4. When the installation is completed, unmount the installation CD-ROM.
+
+	5. License Registration: Log on to the master server as root user and run the following command:
+
+	6. clplcnsc -i <filepath> -p <PRODUCT-ID>
+
+	7. When the command is successfully executed, the message "Command succeeded." is displayed in the console
+
+	Note: Here, specify the filepath to the license file by the -i option & the productID by the -p option.
+
+	8. For Base License: Enter the product ID as BASE33.  Here 33 is the EC version & this number will vary as per the EC deployed. Example for EC2.1 version, command param would become BASE21. The Base license needs to be applied on only one server
+
+	9. For Replicator license: Enter the product ID as REPL33. This license should be registered on both the servers
+
 	Note: For registering the license from the command line refer to EXPRESSCLUSTER, Installation and Configuration Guide.
-	5.2	Restart the Primary and Standby Servers (Machines 1 & 2)
+
+	5.2. Restart the Primary and Standby Servers (Machines 1 & 2)
+
 	First restart the Primary Server and then restart the Standby Server
 
 6. Base Cluster Setup
