@@ -193,70 +193,82 @@
 6. Base Cluster Setup
 
 	This section describes the steps to create a cluster using EXPRESSCLUSTER Manager running on the Management Console/Test Client (Machine 3).
-	6.1	Install Java Runtime Environment (JRE)
+
+	6.1. Install Java Runtime Environment (JRE)
+
 	Verify JRE v.1.5.0.6 or newer is installed on the Management Console/Test Client (Machine 3). If necessary, install JRE by performing the following steps:
-	1.	Run jre-1_5_0 <build and platform version>.exe (a compatible JRE distribution can be found in the jre folder on the EXPRESSCLUSTER CD).
-	2.	On the License Agreement screen, verify the default Typical setup option button is selected. Click Accept.
-	3.	On the Installation Completed screen, click Finish.
-	6.2	Start the cluster manager
+	
+	1. Run jre-1_5_0 <build and platform version>.exe (a compatible JRE distribution can be found in the jre folder on the EXPRESSCLUSTER CD).
+	2. On the License Agreement screen, verify the default Typical setup option button is selected. Click Accept.
+	3. On the Installation Completed screen, click Finish.
+	
+	6.2. Start the cluster manager
+
 	The cluster manager is started by accessing port 29003 from the web browser of any of the nodes (Machine1 or Machine 2). Example: http://localhost:29003
-	6.3	Create a cluster
-	For all of the steps below, refer to Table 1 on page 9 for the IP addresses and server names.
-	1.	When the cluster manager is opened for the first time, a pop up will appear which has three options. Click on "Start cluster generation wizard".
-	2.	A new window opens where the name of the cluster can be specified and cluster generation begins.
-	3.	Type a cluster name. Example: cluster
-	4.	Type the Management IP address and click Next.
-	5.	In the next window, the server on which the cluster creation has started is already added. Click Add to add another server to this cluster.
-	6.	Provide the hostname or the IP address of the second server and click OK.
-	7.	Now both servers will appear on the list. Click Next.
-	8.	EXPRESSCLUSTER X 3.3 automatically detects the IP addresses of the servers, which can be seen on this screen. Select the network to be used for the Heartbeat path as type Kernel Mode. If Mirroring is also occurring through the same network cards, then specify the Mirror connect settings in the respective network fields. Click the dropdown button on the "Mirror Disk Connect" and select the connect number (e.g.: mdc1). Click Next.
-	9.	For this guide, the NP resolutions resources are not configured. Click Next.
-	6.4	Create a failover group
-	For all of the steps below, refer to Table 1 on page 9 for the IP addresses and server names.
-	1.	Now the cluster generation wizard is in the groups section.
-	2.	Click Add to add a group.
-	3.	In the newly opened window, select the type of the group as Failover and give this group a name (e.g.:Failover_MSSQL ) and click Next and then click next.
-	4.	Leave the default options for the group attribute settings and click Next
-	6.5	Create floating IP and mirror disk resources
-	1.	Now in the group resources section of the Cluster generation wizard.
-	2.	Click on Add to add a resource.
-	3.	In the next window, to add a Floating IP Resource (FIP) select "floating ip resource" from the drop down list. Click Next.
-	4.	By default, the FIP resource is not dependent on any other resources. Follow the default dependency and click Next.
-	5.	Use the default options and click Next.
-	6.	Provide a floating IP address that is not used by any other network element. Click Finish.
-	7.	Again click Add to add a mirror disk resource.
-	8.	In the next window, to add a Mirror Disk Resource (MD) select "Mirror Disk resource" from the drop down list. Click Next.
-	9.	Again, follow the default dependency. Click Next.
-	10.	Use the default options and click Next.
-	11.	Now, add both of the servers one by one. Click "Add" to add the first server. In the pop-up window click on the Connect button to refresh the partition information. Select the data and the cluster partitions and click OK.
-	12.	Repeat step 11 for second server as well.
-	13.	Click Finish.
-	14.	By default Mirror Disk monitor resources will be added automatically.
-	15.	To add FIP monitor, Right click on "Monitors" in web manager.
-	16.	Select "Add monitor resource"
-	17.	 Select FIP monitor from type drop down and give name to the monitor resource (eg. fipw_monitor) and click Next.
-	18.	In the Target resource field. Click on Browse. Select the FIP resource and click OK. Click Next.
-	19.	In the Recovery target field, click Browse. Now click on Failover group and click OK.
-	20.	Click Finish to add the FIP monitor resource.
-	6.6	Upload the cluster configuration and initialize the cluster
-	1.	 In the Cluster Manager window, to apply the configuration, click the File menu and then apply the Configuration File.
-	2.	After the upload is completed, change the mode of the Cluster Manager to Operation Mode.
-	3.	Restart Cluster Manager and start the cluster. Click on the Service menu and then click on Start Cluster.
-	4.	In the Cluster Manager window, in the left pane, expand the failover group section, right click on Mirror Disk, and click Details. Mirror disk copy starts automatically, but is not completed. The copy screen should be similar to the following snapshot. This snapshot shows that the status of the data being replicated from the Primary server to the Standby server.
 
+	6.3. Create a cluster
 
-			Figure 1 Data mirroring progress
+	For all of the steps below, refer to Table 1 for the IP addresses and server names.
+	
+	1. When the cluster manager is opened for the first time, a pop up will appear which has three options. Click on "Start cluster generation wizard".
+	2. A new window opens where the name of the cluster can be specified and cluster generation begins.
+	3. Type a cluster name. Example: cluster
+	4. Type the Management IP address and click Next.
+	5. In the next window, the server on which the cluster creation has started is already added. Click Add to add another server to this cluster.
+	6. Provide the hostname or the IP address of the second server and click OK.
+	7. Now both servers will appear on the list. Click Next.
+	8. EXPRESSCLUSTER X 3.3 automatically detects the IP addresses of the servers, which can be seen on this screen. Select the network to be used for the Heartbeat path as type Kernel Mode. If Mirroring is also occurring through the same network cards, then specify the Mirror connect settings in the respective network fields. Click the dropdown button on the "Mirror Disk Connect" and select the connect number (e.g.: mdc1). Click Next.
+	9. For this guide, the NP resolutions resources are not configured. Click Next.
 
-	Note
-	This step may take a while depending on the size of the data in the mirrored disk data partition.
+	6.4. Create a failover group
 
-	5.	After the copy is completed, the following screen is displayed:
+	1. Now the cluster generation wizard is in the groups section.
+	2. Click Add to add a group.
+	3. In the newly opened window, select the type of the group as Failover and give this group a name (e.g.:Failover_MSSQL ) and click Next and then click next.
+	4. Leave the default options for the group attribute settings and click Next
 
-	Figure 2 Mirror disks in Sync
-	6.	Click the Close button on the Mirror Disk Helper window.
-	7.	In the Cluster Manager window, all icons in the tree view should now be green:
+	6.5. Create floating IP and mirror disk resources
 
-	Figure 3 Live Base cluster
+	1. Now in the group resources section of the Cluster generation wizard.
+	2. Click on Add to add a resource.
+	3. In the next window, to add a Floating IP Resource (FIP) select "floating ip resource" from the drop down list. Click Next.
+	4. By default, the FIP resource is not dependent on any other resources. Follow the default dependency and click Next.
+	5. Use the default options and click Next.
+	6. Provide a floating IP address that is not used by any other network element. Click Finish.
+	7. Again click Add to add a mirror disk resource.
+	8. In the next window, to add a Mirror Disk Resource (MD) select "Mirror Disk resource" from the drop down list. Click Next.
+	9. Again, follow the default dependency. Click Next.
+	10. Use the default options and click Next.
+	11. Now, add both of the servers one by one. Click "Add" to add the first server. In the pop-up window click on the Connect button to refresh the partition information. Select the data and the cluster partitions and click OK.
+	12. Repeat step 11 for second server as well.
+	13. Click Finish.
+	14. By default Mirror Disk monitor resources will be added automatically.
+	15. To add FIP monitor, Right click on "Monitors" in web manager.
+	16. Select "Add monitor resource"
+	17. Select FIP monitor from type drop down and give name to the monitor resource (eg. fipw_monitor) and click Next.
+	18. In the Target resource field. Click on Browse. Select the FIP resource and click OK. Click Next.
+	19. In the Recovery target field, click Browse. Now click on Failover group and click OK.
+	20. Click Finish to add the FIP monitor resource.
+
+	6.6. Upload the cluster configuration and initialize the cluster
+
+	1. In the Cluster Manager window, to apply the configuration, click the File menu and then apply the Configuration File.
+	2. After the upload is completed, change the mode of the Cluster Manager to Operation Mode.
+	3. Restart Cluster Manager and start the cluster. Click on the Service menu and then click on Start Cluster.
+	4. In the Cluster Manager window, in the left pane, expand the failover group section, right click on Mirror Disk, and click Details. Mirror disk copy starts automatically, but is not completed. The copy screen should be similar to the following snapshot. This snapshot shows that the status of the data being replicated from the Primary server to the Standby server.
+
+	[Figure 1](fig1.jpg) Data mirroring progress
+
+	Note : This step may take a while depending on the size of the data in the mirrored disk data partition.
+
+	5. After the copy is completed, the following screen is displayed:
+
+	[Figure 2](fig2.jpg) Mirror disks in Sync
+
+	6. Click the Close button on the Mirror Disk Helper window.
+	7. In the Cluster Manager window, all icons in the tree view should now be green:
+
+	[Figure 3](fig3.jpg) Live Base cluster
 
 7. MSSQL Cluster Setup
 
