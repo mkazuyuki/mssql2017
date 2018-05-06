@@ -271,43 +271,45 @@
 
 7. MSSQL Cluster Setup
 
-	7.1	Change the group and user permissions of the md mount point :
-	I.	sudo chown mssql /mssql/data/  ---------------------/mssql/data is md
-	II.	sudo chgrp mssql /mssql/data/ -------------------------same as above
-	III.	Use mssql-conf to change the default data directory with the set command:
-	IV.	sudo /opt/mssql/bin/mssql-conf set filelocation.defaultdatadir /mssql/data
-	V.	Restart the SQL Server service:
-	VI.	sudo systemctl restart mssql-server
+	1. Change the group and user permissions of the md mount point
+
+		1. sudo chown mssql /mssql/data/  ---------------------/mssql/data is md
+		2. sudo chgrp mssql /mssql/data/ -------------------------same as above
+		3. Use mssql-conf to change the default data directory with the set command:
+		4. sudo /opt/mssql/bin/mssql-conf set filelocation.defaultdatadir /mssql/data
+		5. Restart the SQL Server service:
+		6. sudo systemctl restart mssql-server
 
 	To configure MSSQL Database server cluster we will configure its service with EXPRESSCLUSTER. Change the default path of the database to a path on the data partition.
 
-	7.2	Change the default master database file directory location :
-	I.	Make a new mount point and use md if already exists .
-	II.	Use mssql-conf to change the default master database directory for the master data:
-	III.	sudo /opt/mssql/bin/mssql-conf set filelocation.masterdatafile /mssql/data/master.mdf
-	IV.	sudo /opt/mssql/bin/mssql-conf set filelocation.masterlogfile /mssql/data/mastlog.ldf
+	2. Change the default master database file directory location
 
-	7.3	Move the master.mdf and master.ldf
-	I.	Stop the Sql Server Service :
-	II.	sudo systemctl stop mssql-server
-	III.	sudo mv /var/opt/mssql/data/master.mdf /mssql/data/master.mdf
-	IV.	sudo mv /var/opt/mssql/data/mastlog.ldf /mssql/data/mastlog.ldf
-	V.	Start the Sql Service :
-	VI.	sudo systemctl start mssql-server
+		1. Make a new mount point and use md if already exists .
+		2. Use mssql-conf to change the default master database directory for the master data:
+		3. sudo /opt/mssql/bin/mssql-conf set filelocation.masterdatafile /mssql/data/master.mdf
+		4. sudo /opt/mssql/bin/mssql-conf set filelocation.masterlogfile /mssql/data/mastlog.ldf
 
-	7.4	Cluster Configuration Setup
-	7.4.1	Adding a Service resource
+	3. Move the master.mdf and master.ldf
 
-	1.	On Cluster Builder (Config Mode), in the tree view, under Groups, right-click failover and then click Add Resource.
-	2.	In the "Group Resource Definitions" window, for Type, select execute resource from the pull-down box. For Name, use the default (exec). Click Next.
-	3.	On next window, make sure "Follow the default dependency" check box is checked and click NEXT.
-	4.	On next window "Recovery Operation at Deactivation Failure Detection", make the final action as "No Operation (deactivate next resource) and click NEXT.
-	5.	In the next window edit the start.sh file and replace the source with source code shown at end of this document.
-	6.	In the same window select the stop.sh file and edit the stop.sh file and replace the source with scripts shown as below and click FINISH.
+		1. Stop the Sql Server Service :
+		2. sudo systemctl stop mssql-server
+		3. sudo mv /var/opt/mssql/data/master.mdf /mssql/data/master.mdf
+		4. sudo mv /var/opt/mssql/data/mastlog.ldf /mssql/data/mastlog.ldf
+		5. Start the Sql Service :
+		6. sudo systemctl start mssql-server
 
-	Start Script
+	4. Cluster Configuration Setup
+		Adding a Service resource
+		1. On Cluster Builder (Config Mode), in the tree view, under Groups, right-click failover and then click Add Resource.
+		2. In the "Group Resource Definitions" window, for Type, select execute resource from the pull-down box. For Name, use the default (exec). Click Next.
+		3. On next window, make sure "Follow the default dependency" check box is checked and click NEXT.
+		4. On next window "Recovery Operation at Deactivation Failure Detection", make the final action as "No Operation (deactivate next resource) and click NEXT.
+		5. In the next window edit the start.sh file and replace the source with source code shown at end of this document.
+		6. In the same window select the stop.sh file and edit the stop.sh file and replace the source with scripts shown as below and click FINISH.
 
-	Stop Script
+		Start Script
+
+		Stop Script
 
 8. Final deployment in a LAN Environment
 
