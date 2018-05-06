@@ -335,62 +335,79 @@
 9. Common Maintenance Tasks
 
 	This section describes how to perform common EXPRESSCLUSTER maintenance tasks using the EXPRESSCLUSTER Manager.
-	9.1	Start Cluster Manager
-	There are two methods to start/access Cluster Manager through a supported Java enabled web browser. The first method is through the IP address of the physical server running the cluster management server application. The second method is through the floating IP address for a cluster management server within a cluster.
-	a.	The first method is typically used during initial cluster setup before the cluster management server floating IP address becomes effective:
-	i.	Start Internet Explorer or another supported Java enabled Web browser.
-	ii.	Type the URL with the IP address of the active physical server followed by a colon and the cluster management server port number.
 
-	Example:
-	Assuming that the cluster management server is running on an active physical server with an IP address (e.g.: 10.1.1.1) on port number 29003, enter http://10.1.1.1:29003/.
+	1. Start Cluster Manager
 
-	b.	The second method is more convenient and is typically used after initial cluster setup:
-	i.	Start Internet Explorer or another supported Java enabled Web browser.
-	ii.	Type the URL with the cluster management server floating IP address followed by a colon and the cluster management server port number.
+		There are two methods to start/access Cluster Manager through a supported Java enabled web browser. The first method is through the IP address of the physical server running the cluster management server application. The second method is through the floating IP address for a cluster management server within a cluster.
 
-	Example:
-	Assuming that the cluster management server is running with a floating IP address (10.1.1.3) on port 29003, enter http://10.1.1.3:29003/.
+		- The first method is typically used during initial cluster setup before the cluster management server floating IP address becomes effective:
 
+			1. Start Internet Explorer or another supported Java enabled Web browser.
+			2. Type the URL with the IP address of the active physical server followed by a colon and the cluster management server port number.
 
-	9.2	Reboot/shutdown one or all servers
-	9.2.1	Reboot all servers
-	1.	Start Cluster Manager. (Section 9.1)
-	2.	On the left hand side, right click on Cluster name and choose "Reboot".
-	9.2.2	Shutdown all servers
-	1.	Same as "Reboot all servers," except in step 2 click Shutdown.
-	9.2.3	Shutdown one server
-	1.	Start Cluster Manager.( Section 9.1)
-	2.	Right-click the %machine name% and click Shutdown.
-	3.	In the Confirmation window, click OK.
-	4.	Right-click the %cluster name% and click Reboot.
-	5.	In the Confirmation window, click OK.
-	9.3	Startup/stop/move failover groups
-	1.	Start Cluster Manager.( Section 9.1)
-	2.	Under Groups, right-click the Failover group and then click Start/Stop/Move.
-	3.	In the Confirmation window, click OK.
-	9.4	Isolate a server for maintenance
-	1.	Start Cluster Manager. (Section 9.1)
-	2.	In the Cluster Manager window, change to Config Mode.
-	3.	Click the %cluster name% and then right-click Properties.
-	4.	Click the Auto Recovery tab. To manually return the server to the cluster, select Off for the Auto Return option. Otherwise, leave it set to On for automatic recovery when the server is turned back on. Click OK.
-	5.	If a change was made, upload the configuration file.
-	6.	Shut down the server to be isolated for maintenance.
-	7.	The server is now isolated and ready for maintenance tasks.
-	9.5	Return an isolated server to the cluster
-	Start with the server that was isolated in the steps listed above ("Isolate a server for maintenance").
-	9.5.1	Automatic Recovery
-	1.	Turn the machine back on.
-	2.	Recovery starts automatically to return the server to the cluster.
-	9.5.2	Manual Recovery
-	1.	Turn the machine back on and wait until the boot process has completed.
-	2.	Start Cluster Manager.
-	3.	In the Cluster Manager window, right click the name of the server which was isolated and select Recover. The server which was isolated will return to the cluster.
-	9.6	Rebuild a mirror disk
-	1.	Start Cluster Manager. (Section 9.1)
-	2.	In the left pane of the Cluster Manager window, right-click Servers and then click Mirror Disks.
-	3.	In the Mirror Disks window, click the Details button.
-	4.	In the next window, click the button below the %machine name% of the source server to copy files from [Primary Server (Machine 1)] and then click the button below the %machine name% of the machine name of the destination server to copy files to [Standby Server (Machine 2)].
-	5.	Click the Execute button. In the Confirmation window, click OK.
+			Example:  
+			Assuming that the cluster management server is running on an active physical server with an IP address (e.g.: 10.1.1.1) on port number 29003, enter http://10.1.1.1:29003/.
+
+		- The second method is more convenient and is typically used after initial cluster setup:
+
+			1. Start Internet Explorer or another supported Java enabled Web browser.
+			2. Type the URL with the cluster management IP address followed by a colon and the cluster management server port number.
+
+			Example:
+			Assuming that the cluster management server is running with a floating IP address (10.1.1.3) on port 29003, enter http://10.1.1.3:29003/.
+
+	2. Reboot/shutdown one or all servers
+
+		- Reboot all servers
+
+			1. Start Cluster Manager. (Section 9.1)
+			2. On the left hand side, right click on Cluster name and choose "Reboot".
+
+		- Shutdown all servers
+
+			1. Same as "Reboot all servers," except in step 2 click Shutdown.
+
+		- Shutdown one server
+
+			1. Start Cluster Manager.( Section 9.1)
+			2. Right-click the %machine name% and click Shutdown.
+			3. In the Confirmation window, click OK.
+			4. Right-click the %cluster name% and click Reboot.
+			5. In the Confirmation window, click OK.
+
+	3. Startup/stop/move failover groups
+		1. Start Cluster Manager.( Section 9.1)
+		2. Under Groups, right-click the Failover group and then click Start/Stop/Move.
+		3. In the Confirmation window, click OK.
+
+	4. Isolate a server for maintenance
+		1. Start Cluster Manager. (Section 9.1)
+		2. In the Cluster Manager window, change to Config Mode.
+		3. Click the %cluster name% and then right-click Properties.
+		4. Click the Auto Recovery tab. To manually return the server to the cluster, select Off for the Auto Return option. Otherwise, leave it set to On for automatic recovery when the server is turned back on. Click OK.
+		5. If a change was made, upload the configuration file.
+		6. Shut down the server to be isolated for maintenance.
+		7. The server is now isolated and ready for maintenance tasks.
+
+	5. Return an isolated server to the cluster
+
+		Start with the server that was isolated in the steps listed above ("Isolate a server for maintenance").
+
+		- Automatic Recovery
+			1. Turn the machine back on.
+			2. Recovery starts automatically to return the server to the cluster.
+
+		- Manual Recovery
+			1. Turn the machine back on and wait until the boot process has completed.
+			2. Start Cluster Manager.
+			3. In the Cluster Manager window, right click the name of the server which was isolated and select Recover. The server which was isolated will return to the cluster.
+
+	6. Rebuild a mirror disk
+		1. Start Cluster Manager. (Section 9.1)
+		2. In the left pane of the Cluster Manager window, right-click Servers and then click Mirror Disks.
+		3. In the Mirror Disks window, click the Details button.
+		4. In the next window, click the button below the %machine name% of the source server to copy files from [Primary Server (Machine 1)] and then click the button below the %machine name% of the machine name of the destination server to copy files to [Standby Server (Machine 2)].
+		5. Click the Execute button. In the Confirmation window, click OK.
 
 10. Appendix A: EXPRESSCLUSTER X Server Un-installation
 
