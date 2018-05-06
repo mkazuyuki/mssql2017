@@ -412,26 +412,29 @@
 10. Appendix A: EXPRESSCLUSTER X Server Un-installation
 
 	Follow the steps below to uninstall EXPRESSCLUSTER from each of the server systems.
-	1.	On the Management Console/Test Client, in Cluster Manger (Operation Mode), under Groups, right-click Failover and then click STOP.
-	2.	Close Cluster Manger window.
-	3.	On the server system that you are starting the uninstall process for EXPRESSCLUSTER, stop all EXPRESSCLUSTER services. To stop all services, follow the steps below:
 
-	a.	On the terminal stop the following services by running the below commands:
-	i.	service clusterpro stop
-	ii.	service clusterpro_md stop
-	iii.	service clusterpro_evt stop
-	iv.	service clusterpro_trn stop
-	v.	service clusterpro_alertsync stop
-	vi.	service clusterpro_webmgr stop
+	1. On the Management Console/Test Client, in Cluster Manger (Operation Mode), under Groups, right-click Failover and then click STOP.
+	2. Close Cluster Manger window.
+	3. On the server system that you are starting the uninstall process for EXPRESSCLUSTER, stop all EXPRESSCLUSTER services. To stop all services, follow the steps below:
 
-	b.	On the terminal run the below specified command:
-	i.	rpm -e expresscls-[version].[architecture].rpm
+		a. On the terminal stop the following services by running the below commands
 
-	c.	Restart the machine.
+			service clusterpro stop
+			service clusterpro_md stop
+			service clusterpro_evt stop
+			service clusterpro_trn stop
+			service clusterpro_alertsync stop
+			service clusterpro_webmgr stop
 
-	This completes the uninstall process for an individual server system.
+		b. On the terminal run the below specified command
 
-	Note
+			rpm -e expresscls-[version].[architecture].rpm
+
+		c. Restart the machine.
+
+		This completes the uninstall process for an individual server system.
+
+	Note:  
 	You must be logged on as a root or an account with administrator privileges to uninstall Express Cluster Server.
 	If a shared disk is used, unplug all disk cables connected to the server after un-installation is completed.
 
