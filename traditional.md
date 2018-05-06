@@ -25,11 +25,11 @@
 	3. Server Requirements
 		1. Machine 1: Primary Server
 		2. Machine 2: Standby Server
-		3. Machine 3: Test Client
+		3. Machine 3: Client Machine
 
 	|		| Machine 1		| Machine 2		| Machine 3	|
 	| ----		| ----			| ----			| ----		|
-	|		| Primary Server	| Standby Server	| Test Client	|
+	|		| Primary Server	| Standby Server	| Client Machine	|
 	|CPU		| x64 - 2 Core or more	| same as Machine 1	| Pentium 4 -  3.0 GHz or better	|
 	|Memory		| 2 GB or more		| same as Machine 1	| 512 MB or more	|
 	|Disk		| 1 physical disk<br> OS partition: 20GB or more<br> Cluster partition: Partition of 20MB or more, available  for EXPRESSCLUSTER management<br> Data partition: enough partition space to store MSSQL Database.	| same as Machine 1	| 1 physical disk with 20 GB or more space available	|
@@ -43,7 +43,7 @@
 
 	- Machine 1 Primary Server
 	- Machine 2 Standby Server
-	- Machine 3 Test Client Machine
+	- Machine 3 Client Machine
 
 	Table 1 : System Network Configuration
 
@@ -82,7 +82,7 @@
 	1. Setup the Primary Server (Machine 1)
 		1. Verify basic system boot and root login functionality and availability of required hardware components as specified in Chapter 2.
 		2. Configure network interface names
-			1. Rename the network interface to be used for network communication with client systems to Public.
+			1. Rename the network interface to be used for network communication with client machine to Public.
 			2. Rename the network interface to be used for internal EXPRESSCLUSTER X management and data mirroring network communication between servers to Interconnect.
 		3. Configure Network
 			1. In the `System` tab go to `Administration` further go to `Network`.
@@ -191,9 +191,9 @@
 
 6. Base Cluster Setup
 
-	This section describes the steps to create a cluster using EXPRESSCLUSTER Manager running on the Management Console/Test Client (Machine 3).
+	This section describes the steps to create a cluster using EXPRESSCLUSTER Manager running on the Management Console/Client (Machine 3).
 
-	Verify JRE v.1.5.0.6 or newer is installed on the Management Console/Test Client (Machine 3). If necessary, install JRE by performing the following steps:
+	Verify JRE v.1.5.0.6 or newer is installed on the Management Console/Client (Machine 3). If necessary, install JRE by performing the following steps:
 
 	1. Install Java Runtime Environment (JRE)
 
@@ -244,7 +244,7 @@
 		14. By default Mirror Disk monitor resources will be added automatically.
 		15. To add FIP monitor, Right click on "Monitors" in web manager.
 		16. Select "Add monitor resource"
-		17. Select FIP monitor from type drop down and give name to the monitor resource (eg. fipw_monitor) and click Next.
+		17. Select FIP monitor from type drop down and give name to the monitor resource (eg. fip_monitor) and click Next.
 		18. In the Target resource field. Click on Browse. Select the FIP resource and click OK. Click Next.
 		19. In the Recovery target field, click Browse. Now click on Failover group and click OK.
 		20. Click Finish to add the FIP monitor resource.
@@ -273,32 +273,39 @@
 
 	1. Change the group and user permissions of the md mount point
 
-		1. sudo chown mssql /mssql/data/  ---------------------/mssql/data is md
-		2. sudo chgrp mssql /mssql/data/ -------------------------same as above
-		3. Use mssql-conf to change the default data directory with the set command:
-		4. sudo /opt/mssql/bin/mssql-conf set filelocation.defaultdatadir /mssql/data
-		5. Restart the SQL Server service:
-		6. sudo systemctl restart mssql-server
+		1. Change the owner and group of the mount point for the mirror disk resource.
+
+				sudo chown mssql:mssql /mssql/data/
+
+		2. Use mssql-conf to change the default data directory with the set command
+
+				sudo /opt/mssql/bin/mssql-conf set filelocation.defaultdatadir /mssql/data
+
+		3. Restart the SQL Server service
+
+				sudo systemctl restart mssql-server
 
 	To configure MSSQL Database server cluster we will configure its service with EXPRESSCLUSTER. Change the default path of the database to a path on the data partition.
 
 	2. Change the default master database file directory location
 
-		1. Make a new mount point and use md if already exists .
-		2. Use mssql-conf to change the default master database directory for the master data:
-		3. sudo /opt/mssql/bin/mssql-conf set filelocation.masterdatafile /mssql/data/master.mdf
-		4. sudo /opt/mssql/bin/mssql-conf set filelocation.masterlogfile /mssql/data/mastlog.ldf
+		1. Make a new mount point and use md if already exists.
+		2. Use mssql-conf to change the default master database directory for the master data
+		
+				sudo /opt/mssql/bin/mssql-conf set filelocation.masterdatafile /mssql/data/master.mdf
+				sudo /opt/mssql/bin/mssql-conf set filelocation.masterlogfile /mssql/data/mastlog.ldf
 
 	3. Move the master.mdf and master.ldf
 
-		1. Stop the Sql Server Service :
-		2. sudo systemctl stop mssql-server
-		3. sudo mv /var/opt/mssql/data/master.mdf /mssql/data/master.mdf
-		4. sudo mv /var/opt/mssql/data/mastlog.ldf /mssql/data/mastlog.ldf
-		5. Start the Sql Service :
-		6. sudo systemctl start mssql-server
+		Stop the SQL Server service, move the files for master database, satart the SQL Server service. 
+
+			sudo systemctl stop mssql-server
+			sudo mv /var/opt/mssql/data/master.mdf /mssql/data/master.mdf
+			sudo mv /var/opt/mssql/data/mastlog.ldf /mssql/data/mastlog.ldf
+			sudo systemctl start mssql-server
 
 	4. Cluster Configuration Setup
+
 		Adding a Service resource
 		1. On Cluster Builder (Config Mode), in the tree view, under Groups, right-click failover and then click Add Resource.
 		2. In the "Group Resource Definitions" window, for Type, select execute resource from the pull-down box. For Name, use the default (exec). Click Next.
@@ -314,15 +321,15 @@
 8. Final deployment in a LAN Environment
 
 	This chapter describes the steps to verify a LAN infrastructure and to deploy the cluster configuration on the Primary and the Secondary servers
-	1.	Configure and verify the  connection between the Primary and Standby servers to meet the following requirements:
-	-	Two logically separate IP protocol networks: one for the Public Network and one for the Cluster Interconnect.
-	-	The Public Network must be a single IP subnet that spans the Primary and Standby servers to enable transparent redirection of the client connection to a single floating server IP address.
-	-	The Cluster Interconnect should be a single IP subnet that spans the Primary and Standby servers to simplify system setup.
-	-	A proper IP network between client and server machines on the Public Network on both the Primary and Standby servers.
-	2.	Make sure that the Primary server is in active mode with a fully functional target application and the Standby Server is running in passive mode.
-	3.	Ping both the Primary and Secondary servers from the test system and make sure the Secondary server has all the target services in manual and stopped mode.
-	4.	Start the cluster and try accessing the application from the Primary server. Then move the cluster to the Secondary server. Check the availability of the application on the Secondary server after failover.
-	5.	Deployment is completed.
+	1. Configure and verify the  connection between the Primary and Standby servers to meet the following requirements:
+		- Two logically separate IP networks: one for the Public Network and one for the Cluster Interconnect.
+		- The Public Network must be a single IP subnet that spans the Primary and Standby servers to enable transparent redirection of the client connection to a single floating IP address.
+		- The Cluster Interconnect should be a single IP subnet that spans the Primary and Standby servers to simplify system setup.
+		- A proper IP network between client and server machines on the Public Network on both the Primary and Standby servers.
+	2. Make sure that the Primary server is in active mode with a fully functional target application and the Standby Server is running in passive mode.
+	3. Ping both the Primary and Secondary servers from the test machine and make sure the Secondary server has all the target services in manual and stopped mode.
+	4. Start the cluster and try accessing the application from the Primary server. Then move the cluster to the Secondary server. Check the availability of the application on the Secondary server after failover.
+	5. Deployment is completed.
 
 
 9. Common Maintenance Tasks
@@ -415,7 +422,7 @@
 
 	Machine 1 Primary Server
 	Machine 2 Standby Server
-	Machine 3 Test client Machine
+	Machine 3 client Machine
 	Table 1: System Network Interfaces
 
 	Machine
