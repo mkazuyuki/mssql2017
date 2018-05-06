@@ -6,12 +6,12 @@
 
 2. System Requirements and Planning
 
-	1. Versions used verified
+	1. Versions used on verification
 
-	- mssql-server-14.0.3006.16-3.x86_64
-	- mssql-tools-14.0.6.0-1.x86_64
-	- EXPRESSCLUSTER X 3.3.5-1
-	- CentOS 7.4 (kernel-3.10.0-693.el7.x86_64)
+		- mssql-server-14.0.3006.16-3.x86_64
+		- mssql-tools-14.0.6.0-1.x86_64
+		- EXPRESSCLUSTER X 3.3.5-1
+		- CentOS 7.4 (kernel-3.10.0-693.el7.x86_64)
 
 	2. License Requirements
 
@@ -23,9 +23,10 @@
 	| EXPRESSCLSTER X Database Agent 3.3	| 2 |
 
 	3. Server Requirements
-		1. Machine 1: Primary Server
-		2. Machine 2: Standby Server
-		3. Machine 3: Client Machine
+
+		- Machine 1: Primary Server
+		- Machine 2: Standby Server
+		- Machine 3: Client Machine
 
 	|		| Machine 1		| Machine 2		| Machine 3	|
 	| ----		| ----			| ----			| ----		|
@@ -39,11 +40,11 @@
 
 	4. System Planning
 
-	Review the requirements from the last section and then fill out the tables of the worksheet below. Use for reference in the following sections of this guide. See Appendix B for an example worksheet.
+		Review the requirements from the last section and then fill out the tables of the worksheet below. Use for reference in the following sections of this guide. See Appendix B for an example worksheet.
 
-	- Machine 1 Primary Server
-	- Machine 2 Standby Server
-	- Machine 3 Client Machine
+		- Machine 1 Primary Server
+		- Machine 2 Standby Server
+		- Machine 3 Client Machine
 
 	Table 1 : System Network Configuration
 
