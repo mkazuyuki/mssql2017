@@ -316,8 +316,14 @@
 		6. In the same window select the stop.sh file and edit the stop.sh file and replace the source with scripts shown as below and click FINISH.
 
 		Start Script
+		
+			#!/bin/bash
+			sudo systemctl start mssql-server
 
 		Stop Script
+
+			#!/bin/bash
+			sudo systemctl stop mssql-server
 
 8. Final deployment in a LAN Environment
 
@@ -343,7 +349,7 @@
 
 		- The first method is typically used during initial cluster setup before the cluster management server floating IP address becomes effective:
 
-			1. Start Internet Explorer or another supported Java enabled Web browser.
+			1. Start **Internet Explorer** or another supported Java enabled Web browser.
 			2. Type the URL with the IP address of the active physical server followed by a colon and the cluster management server port number.
 
 			Example:  
@@ -351,7 +357,7 @@
 
 		- The second method is more convenient and is typically used after initial cluster setup:
 
-			1. Start Internet Explorer or another supported Java enabled Web browser.
+			1. Start **Internet Explorer** or another supported Java enabled Web browser.
 			2. Type the URL with the cluster management IP address followed by a colon and the cluster management server port number.
 
 			Example:
@@ -366,26 +372,26 @@
 
 		- Shutdown all servers
 
-			1. Same as "Reboot all servers," except in step 2 click Shutdown.
+			1. Same as "Reboot all servers," except in step 2 click **Shutdown**.
 
 		- Shutdown one server
 
 			1. Start Cluster Manager.( Section 9.1)
-			2. Right-click the %machine name% and click Shutdown.
-			3. In the Confirmation window, click OK.
-			4. Right-click the %cluster name% and click Reboot.
-			5. In the Confirmation window, click OK.
+			2. Right-click the **%machine name%** and click **Shutdown**.
+			3. In the Confirmation window, click **OK**.
+			4. Right-click the **%cluster name%** and click **Reboot**.
+			5. In the Confirmation window, click **OK**.
 
 	3. Startup/stop/move failover groups
 		1. Start Cluster Manager.( Section 9.1)
-		2. Under Groups, right-click the Failover group and then click Start/Stop/Move.
-		3. In the Confirmation window, click OK.
+		2. Under **Groups**, right-click the **Failover group** and then click **Start/Stop/Move**.
+		3. In the Confirmation window, click **OK**.
 
 	4. Isolate a server for maintenance
 		1. Start Cluster Manager. (Section 9.1)
-		2. In the Cluster Manager window, change to Config Mode.
-		3. Click the %cluster name% and then right-click Properties.
-		4. Click the Auto Recovery tab. To manually return the server to the cluster, select Off for the Auto Return option. Otherwise, leave it set to On for automatic recovery when the server is turned back on. Click OK.
+		2. In the Cluster Manager window, change to **Config Mode**.
+		3. Click the **%cluster name%** and then right-click **Properties**.
+		4. Click the **Auto Recovery tab**. To manually return the server to the cluster, select **Off** for the **Auto Return ** option. Otherwise, leave it set to **On** for automatic recovery when the server is turned back on. Click **OK**.
 		5. If a change was made, upload the configuration file.
 		6. Shut down the server to be isolated for maintenance.
 		7. The server is now isolated and ready for maintenance tasks.
@@ -441,102 +447,36 @@
 
 11. Appendix B: Example System Planning Worksheet
 
-	Machine 1 Primary Server
-	Machine 2 Standby Server
-	Machine 3 client Machine
+	- Machine 1 Primary Server
+	- Machine 2 Standby Server
+	- Machine 3 Client Machine
+
 	Table 1: System Network Interfaces
 
-	Machine
-	Host name
-	Network Connection
-
-	IP Address
-
-	Subnet Mask
-	Default
-	Gateway
-	Preferred DNS Server
-
-	1
-
-	Primary
-	Public
-
-	Interconnect
-
-	10.1.1.1
-
-	192.168.1.1
-	255.255.255.0
-
-	255.255.255.0
-	10.1.1.3
-
-	----------
-	10.1.1.3
-
-	-----------
-
-	2
-	Standby
-	Public
-
-	Interconnect
-
-	10.1.1.2
-
-	192.168.1.2
-	255.255.255.0
-
-	255.255.255.0
-	10.1.1.3
-
-	----------
-	10.1.1.3
-
-	----------
+	| Machine	| Host name	| Network Connection	| IP Address	| Subnet Mask | Default Gateway	| Preferred DNS Server	|
+	| ----	| ----	| ----	| ----	| ----	| ----	| ----	|
+	| 1	| Primary	| Public<br>Interconnect	| 10.1.1.1<br>192.168.1.1	| 255.255.255.0<br>255.255.255.0	| 10.1.1.3<br>__________	| 10.1.1.3<br>__________	|
+	| 2	| Standby	| Public<br>Interconnect	| 10.1.1.2<br>192.168.1.2	| 255.255.255.0<br>255.255.255.0	| 10.1.1.3<br>__________	| 10.1.1.3<br>__________	|
 
 
-	    Table 2: System OS and Disks
+	Table 2: System OS and Disks
 
-	Machine
-	OS
-	Disk 0 (OS Disk)
-	Disk 1 (Data Disk)
+	| Machine	| OS	| Disk 0 (OS Disk)	| Disk 1 (Data Disk)
+	| ---	| ---	| ---	| ---	|
+	| 1	| Linux	| Boot Partition: /dev/sda1<br>Size: 75GB	| Cluster Partition: /dev/sdb1<br>size: 24MB<br>Data Partition:/dev/sdc1<br>size: 50GB	|
+	| 2	| Linux	| Boot Partition:<br>Drive Letter: /dev/sda1<br>Size: 75GB	| same as machine 1	|
+	| 3	| Win XP SP1 or later	| C: 20 GB	||
 
-	       1
-	Linux
-	Boot Partition:
-	/dev/sda1
-	Size: 75GB
-		* Cluster Partition:
-	   /dev/sdb1
-	   Size: 24MB
+	   \* Must be a raw partition and larger than 17MB.
 
-	  Data Partition:
-	  /dev/sdc1
-	  Size: 50GB
-
-
-	       2
-	Linux
-	Boot Partition:
-	Drive Letter: /dev/sda1
-	Size:  75GB
-
-
-	       3
-	Win XP SP1 or later
-	C: 20 GB
-
-	   * Must be a raw partition and larger than 17MB.
 	Floating IP (FIP) address:
+
 	Web Management Console FIP:      (1) 10.0.0.222
+
 	Table 3: System Logins and Passwords
-		Login	Password
-	Machine 1
-	 Administrator	Root	admin1234
-	Machine 2
-	 Administrator	Root	admin1234
-	MSSQL DB
-	Administrator	Root	admin1234
+
+	|	| Login	| Password	|
+	| ---	| ---	| ---		|
+	| Machine 1 Administrator	| root	| admin1234	|
+	| Machine 2 Administrator	| root	| admin1234	|
+	| MSSQL DB Administrator	| root	| admin1234	|
