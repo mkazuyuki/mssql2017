@@ -1,24 +1,28 @@
 # EXPRESSCLUSTER X Quick Start Guide for MS SQL Server on Linux (FCI Configuration)
 
-1	Overview
-The general procedure to deploy MSSQL Database Server with EXPRESSCLUSTER X on two server machines (Primary and Standby) for high availability of MSSQL Database Server consists of the following major steps:
-1.	Perform system planning to determine requirements and specify configuration settings prior to start of actual system installation and configuration. 
-2.	Prepare the Primary and Standby Servers including OS installation and configuration if necessary.
-3.	Install, configure, and verify MSSQL Database Server on the Primary and Standby Servers respectively. If an existing production MSSQL Database Server system exists already then it could be used as the Primary Server without reinstallation of MSSQL Database Server.
-4.	Install and configure EXPRESSCLUSTER Server on the Primary and Standby Servers.
-5.	Create and configure EXPRESSCLUSTER failover group to enable continuous protection and automatic recovery for MSSQL Database Server.
-6.	Upload the configuration file on the server and start the cluster to complete the deployment.
- 
+1. Overview
 
-2	System Requirements and Planning
-2.1	MSSQL Database Server Requirements
--	SQL Server 2017
+	The general procedure to deploy MSSQL Database Server with EXPRESSCLUSTER X on two server machines (Primary and Standby) for high availability of MSSQL Database Server consists of the following major steps:
+
+	1. Perform system planning to determine requirements and specify configuration settings prior to start of actual system installation and configuration. 
+	2. Prepare the Primary and Standby Servers including OS installation and configuration if necessary.
+	3. Install, configure, and verify MSSQL Database Server on the Primary and Standby Servers respectively. If an existing production MSSQL Database Server system exists already then it could be used as the Primary Server without reinstallation of MSSQL Database Server.
+	4. Install and configure EXPRESSCLUSTER Server on the Primary and Standby Servers.
+	5. Create and configure EXPRESSCLUSTER failover group to enable continuous protection and automatic recovery for MSSQL Database Server.
+	6. Upload the configuration file on the server and start the cluster to complete the deployment.
+
+2. System Requirements and Planning
+
+	2.1. MSSQL Database Server Requirements
+
+- SQL Server 2017
 
 System Requirements
-1.	Machine 1:  Primary Server
-2.	Machine 2:  Standby Server
-3.	Machine 3: Test Client Machine
-4.	Storage as per user requirement
+
+	- Machine 1: Primary Server
+	- Machine 2: Standby Server
+	- Machine 3: Test Client Machine
+	- Storage as per user requirement
 
 	Machine 1
 Primary Server	Machine 2
@@ -36,9 +40,10 @@ OS partition: 20GB or more space available(to include the installation of MSSQL 
 	1 physical disk with 20 GB or more space available
 OS	Linux	Windows XP or later
 Software	Java 1.5(or later) enabled web browser	Java 1.5(or later) enabled web browser
-Network	2  100Mbit or faster Ethernet network
-interface cards	1 100Mbit or faster Ethernet network interface card
-2.2	System Planning
+Network	2  100Mbit or faster Ethernet network interface cards	1 100Mbit or faster Ethernet network interface card
+
+	2.2. System Planning
+
 Review the requirements from the last section and then fill out the tables of the worksheet below. Use for reference in the following sections of this guide. See Appendix B for an example worksheet.
 Machine 1 Primary Server
 Machine 2 Standby Server
@@ -76,60 +81,72 @@ Machine 3 Administrator
 
 
  
-3	Base System Setup
-3.1	Setup the Primary Server (Machine 1)
-If necessary, install required hardware components and a supported OS as specified    in Chapter 0.
-1.	Verify basic system boot and root login functionality and availability of required hardware components as specified in Chapter 0.
-2.	Configure network interface names
-a.	Rename the network interface to be used for network communication with client systems to Public. 
-b.	Rename the network interface to be used for internal EXPRESSCLUSTER X management and data mirroring network communication between servers to Interconnect.
-3.	Configure network interface Settings:
-a.	In the “System” tab go to “Administration” further go to “Network”.
-b.	In the Network Connections window, double-click Public.
-c.	In the dialog box, click the statically set IP address: option button.
-d.	Type the IP address, Subnet mask, and Default gateway values (see Table 1).
-e.	Go back to the Network Connections window. Double-click Interconnect.
-f.	In the dialog box, click the statically set IP address: option button.
-g.	Type the IP address and Subnet mask values (see Table 1).
+3. Base System Setup
+
+	3.1.	Setup the Primary Server (Machine 1)
+
+		If necessary, install required hardware components and a supported OS as specified in Chapter 0.
+1. Verify basic system boot and root login functionality and availability of required hardware components as specified in Chapter 0.
+2. Configure network interface names
+	a. Rename the network interface to be used for network communication with client systems to Public. 
+	b. Rename the network interface to be used for internal EXPRESSCLUSTER X management and data mirroring network communication between servers to Interconnect.
+3. Configure network interface Settings:
+a. In the “System” tab go to “Administration” further go to “Network”.
+b. In the Network Connections window, double-click Public.
+c. In the dialog box, click the statically set IP address: option button.
+d. Type the IP address, Subnet mask, and Default gateway values (see Table 1).
+e. Go back to the Network Connections window. Double-click Interconnect.
+f. In the dialog box, click the statically set IP address: option button.
+g. Type the IP address and Subnet mask values (see Table 1).
 Click OK. 
-h.	On the terminal, run the command “service network restart”.
-3.2	Setup the Standby Server (Machine 2)
-Perform steps 1-3 in Section 3.1 on the Standby Server
+h. On the terminal, run the command “service network restart”.
+
+	3.2. Setup the Standby Server (Machine 2)
+
+		Perform steps 1-3 in Section 3.1 on the Standby Server
  
-4	MSSQL Server Installation
-Version of the software’s used for creating this Guide:
+4. MSSQL Server Installation
+
+	Version of the software’s used for creating this Guide:
+
 Cent operating systems -> 7.4(3.10.0-693.el7.x86_64)
 Cent operating systems -> CentOS / MSSQL 2017
-4.1	Installing MSSQL  on Primary Server
-1.	Please install and configure SQL Server 2017 as per requirement of the client/customer. 
-a.	Download the Microsoft SQL Server repository configuration file :
-https://packages.microsoft.com/config/rhel/7/mssql-server-2017.repo
-b.	Install MSSQL Server , Run the command :
-sudo yum install -y mssql-server
-c.	Set up password and Version :
-sudo /opt/mssql/bin/mssql-conf
-d.	To check MSSQL status :
-systemctl status mssql-server
-e.	Allow port in running firewall :
-sudo firewall-cmd --zone=public --add-port=1433/tcp -permanent
-sudo firewall-cmd -reload
-2.	MSSQL server command line tools installation
-a.	Run Command : 
-sudo curl -o /etc/yum.repos.d/msprod.repo
-https://packages.microsoft.com/config/rhel/7/prod.repo
-remove if already installed 
-sudo yum remove unixODBC-utf16 unixODBC-utf16-devel
-b.	now install mssql-tools with unixodbc developer package :
-sudo yum install -y mssql-tools unixODBC-devel
-c.	enter path in the bash profile and bashrc file 
-echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
-echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-source ~/.bashrc
-d.	Run this command to add , it will add sqlcmdpath
-sudo ln -s /opt/mssql-tools/bin/* /usr/local/bin/
+
+4.1. Installing MSSQL  on Primary Server
+
+	1. Please install and configure SQL Server 2017 as per requirement of the client/customer. 
+
+	a. Download the Microsoft SQL Server repository configuration file :
+	https://packages.microsoft.com/config/rhel/7/mssql-server-2017.repo
+	b. Install MSSQL Server , Run the command :
+	sudo yum install -y mssql-server
+	c. Set up password and Version :
+	sudo /opt/mssql/bin/mssql-conf
+	d. To check MSSQL status :
+	systemctl status mssql-server
+	e. Allow port in running firewall :
+	sudo firewall-cmd --zone=public --add-port=1433/tcp -permanent
+	sudo firewall-cmd -reload
+
+	2.	MSSQL server command line tools installation
+
+	a. Run Command : 
+	sudo curl -o /etc/yum.repos.d/msprod.repo
+	https://packages.microsoft.com/config/rhel/7/prod.repo
+	remove if already installed 
+	sudo yum remove unixODBC-utf16 unixODBC-utf16-devel
+	b. now install mssql-tools with unixodbc developer package :
+	sudo yum install -y mssql-tools unixODBC-devel
+	c. enter path in the bash profile and bashrc file 
+	echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+	echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+	source ~/.bashrc
+	d. Run this command to add , it will add sqlcmdpath
+	sudo ln -s /opt/mssql-tools/bin/* /usr/local/bin/
 
 Note: Perform all the steps under section 4 on Machine 2.
-5	EXPRESSCLUSTER X Server Installation
+
+5.	EXPRESSCLUSTER X Server Installation
 5.1	Install EXPRESSCLUSTER on the Primary & Standby Server (Machine 1&2)
 a.	Install the EXPRESSCLUSTER Server RPM on all server(s) that constitute the cluster by following the procedures below.
 Note: Log in as root user when installing the EXPRESSCLUSTER Server RPM.
@@ -152,14 +169,14 @@ Note: For registering the license from the command line refer to EXPRESSCLUSTER,
 First restart the Primary Server and then restart the Standby Server
 
  
-6	ISCSI Target and Initiator configuration 
+6. ISCSI Target and Initiator configuration 
 6.1	ISCSI Target Configuration
 Configure the storage to be used as the Target Server.
 6.2	ISCSI Target Configuration
 Use the Primary Server and Secondary server as the Initiator 1 and 2 respectively
 
  
-7	Base Cluster Setup
+7. Base Cluster Setup
 This section describes the steps to create a cluster using EXPRESSCLUSTER Manager running on the Management Console/Test Client (Machine 3).
 7.1	Install Java Runtime Environment (JRE)
 Verify JRE v.1.5.0.6 or newer is installed on the Management Console/Test Client (Machine 3). If necessary, install JRE by performing the following steps:
@@ -266,20 +283,23 @@ Stop Script
 Start Script
 Stop Script
   10.0.7.118 - IP of target server
-9	Final Deployment in a LAN Environment
-This chapter describes the steps to verify a LAN infrastructure and to deploy the cluster configuration on the Primary and the Secondary servers
-1.	Configure and verify the  connection between the Primary and Standby servers to meet the following requirements:
--	Two logically separate IP protocol networks: one for the Public Network and one for the Cluster Interconnect.
--	The Public Network must be a single IP subnet that spans the Primary and Standby servers to enable transparent redirection of the client connection to a single floating server IP address. 
--	The Cluster Interconnect should be a single IP subnet that spans the Primary and Standby servers to simplify system setup.
--	A proper IP network between client and server machines on the Public Network on both the Primary and Standby servers.
-2.	Make sure that the Primary server is in active mode with a fully functional target application and the Standby Server is running in passive mode.
-3.	Ping both the Primary and Secondary servers from the test system and make sure the Secondary server has all the target services in manual and stopped mode.
-4.	Start the cluster and try accessing the application from the Primary server. Then move the cluster to the Secondary server. Check the availability of the application on the Secondary server after failover.
-5.	Deployment is completed.
+
+9. Final Deployment in a LAN Environment
+
+	This chapter describes the steps to verify a LAN infrastructure and to deploy the cluster configuration on the Primary and the Secondary servers
+
+	1. Configure and verify the  connection between the Primary and Standby servers to meet the following requirements:
+		- Two logically separate IP protocol networks: one for the Public Network and one for the Cluster Interconnect.
+		- The Public Network must be a single IP subnet that spans the Primary and Standby servers to enable transparent redirection of the client connection to a single floating server IP address. 
+		- The Cluster Interconnect should be a single IP subnet that spans the Primary and Standby servers to simplify system setup.
+		- A proper IP network between client and server machines on the Public Network on both the Primary and Standby servers.
+	2. Make sure that the Primary server is in active mode with a fully functional target application and the Standby Server is running in passive mode.
+	3. Ping both the Primary and Secondary servers from the test system and make sure the Secondary server has all the target services in manual and stopped mode.
+	4. Start the cluster and try accessing the application from the Primary server. Then move the cluster to the Secondary server. Check the availability of the application on the Secondary server after failover.
+	5. Deployment is completed.
  
 
-10	Common Maintenance Tasks
+10. Common Maintenance Tasks
 This section describes how to perform common EXPRESSCLUSTER maintenance tasks using the EXPRESSCLUSTER Manager.
 10.1	Start Cluster Manager
 There are two methods to start/access Cluster Manager through a supported Java enabled web browser. The first method is through the IP address of the physical server running the cluster management server application. The second method is through the floating IP address for a cluster management server within a cluster.
