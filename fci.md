@@ -14,48 +14,37 @@
 2. System Requirements and Planning
 
 	2.1. MSSQL Database Server Requirements
+	- SQL Server 2017
 
-- SQL Server 2017
-
-System Requirements
-
+	System Requirements
 	- Machine 1: Primary Server
 	- Machine 2: Standby Server
 	- Machine 3: Test Client Machine
 	- Storage as per user requirement
 
-	Machine 1
-Primary Server	Machine 2
-Standby Server	Machine 3
-Test Machine
-
-CPU	
-Processor cores : 2 cores
-	
-Pentium 4 -  3.0 GHz or better
-	Processor type : x64-compatible only	
-Memory	2GB or more	512 MB or more
-Disk	1 physical disk
-OS partition: 20GB or more space available(to include the installation of MSSQL Database Server)
-	1 physical disk with 20 GB or more space available
-OS	Linux	Windows XP or later
-Software	Java 1.5(or later) enabled web browser	Java 1.5(or later) enabled web browser
-Network	2  100Mbit or faster Ethernet network interface cards	1 100Mbit or faster Ethernet network interface card
+	|		| Machine 1 Primary Server<br>Machine 2 Standby Server	| Machine 3 Test Machine	|
+	| ---		| ---							| ---				|
+	| CPU		| Processor cores : 2 cores x64				| Pentium 4 -  3.0 GHz or better|
+	| Memory	| 2GB or more						| 512 MB or more		|
+	| Disk 		| 1 physical disk<br>OS partition: 20GB or more space available(to include the installation of MSSQL Database Server)| 1 physical disk with 20 GB or more space available |
+	| OS		| Linux	| Windows XP or later	|
+	| Software	| Java 1.5(or later) enabled web browser	| Java 1.5(or later) enabled web browser	|
+	| Network	| 2 100Mbit or faster Ethernet network interface cards	| 1 100Mbit or faster Ethernet network interface card |
 
 	2.2. System Planning
 
-Review the requirements from the last section and then fill out the tables of the worksheet below. Use for reference in the following sections of this guide. See Appendix B for an example worksheet.
-Machine 1 Primary Server
-Machine 2 Standby Server
-Machine 3 Test Client Machine
-Table 1: System Network Configuration
-Machine	Host name	Network Connection	IP Address	Subnet Mask	Default
-Gateway	Preferred DNS Server
-1		Public:				
-		Interconnect:				
-2		Public:				
-		Interconnect:				
-3						
+	Review the requirements from the last section and then fill out the tables of the worksheet below. Use for reference in the following sections of this guide. See Appendix B for an example worksheet.
+	- Machine 1 Primary Server
+	- Machine 2 Standby Server
+	- Machine 3 Test Client Machine
+
+	Table 1: System Network Configuration
+
+| Machine	| Host name	| Network Connection	| IP Address	| Subnet Mask	| Default Gateway	| Preferred DNS Server	|
+| ---		| ---		| ---			| ---		| ---		| ---			| ---	|
+| 1		|		| Public:<br><br>Interconnect:<br><br>	|	|	|			|	|	
+| 2		| 		| Public:<br><br>Interconnect:<br><br>	|	|	|	
+| 3		|		|			|		|		|			|		|
 
 Floating IP (FIP) address: 
 Web Management Console FIP:   (1) ______________
