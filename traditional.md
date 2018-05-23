@@ -192,7 +192,7 @@
 
 6. Base Cluster Setup
 
-	This section describes the steps to create a cluster using EXPRESSCLUSTER Manager running on the Management Console/Client (Machine 3).
+	This chapter describes the steps to create a cluster using EXPRESSCLUSTER Manager running on the Management Console/Client (Machine 3).
 
 	Verify JRE v.1.5.0.6 or newer is installed on the Management Console/Client (Machine 3). If necessary, install JRE by performing the following steps:
 
@@ -227,7 +227,7 @@
 		3. In the newly opened window, select the type of the group as Failover and give this group a name (e.g.:Failover_MSSQL ) and click Next and then click next.
 		4. Leave the default options for the group attribute settings and click Next
 
-	5. Create floating IP and mirror disk resources
+	5. Create floating IP and disk resources
 
 		1. Now in the group resources section of the Cluster generation wizard.
 		2. Click on Add to add a resource.
@@ -235,7 +235,7 @@
 		4. By default, the FIP resource is not dependent on any other resources. Follow the default dependency and click Next.
 		5. Use the default options and click Next.
 		6. Provide a floating IP address that is not used by any other network element. Click Finish.
-		7. Again click Add to add a mirror disk resource.
+		7. Again click Add to add a Disk Resource.
 		8. In the next window, to add a Mirror Disk Resource (MD) select "Mirror Disk resource" from the drop down list. Click Next.
 		9. Again, follow the default dependency. Click Next.
 		10. Use the default options and click Next.
@@ -311,7 +311,7 @@
 		1. On Cluster Builder (Config Mode), in the tree view, under Groups, right-click failover and then click Add Resource.
 		2. In the "Group Resource Definitions" window, for Type, select execute resource from the pull-down box. For Name, use the default (exec). Click Next.
 		3. On next window, make sure "Follow the default dependency" check box is checked and click NEXT.
-		4. On next window "Recovery Operation at Deactivation Failure Detection", make the final action as "No Operation (deactivate next resource) and click NEXT.
+		4. On next window "Recovery Operation at Deactivation Failure Detection", make the final action as "No Operation (deactivate next resource)" and click NEXT.
 		5. In the next window edit the start.sh file and replace the source with source code shown at end of this document.
 		6. In the same window select the stop.sh file and edit the stop.sh file and replace the source with scripts shown as below and click FINISH.
 
@@ -328,7 +328,7 @@
 8. Final deployment in a LAN Environment
 
 	This chapter describes the steps to verify a LAN infrastructure and to deploy the cluster configuration on the Primary and the Secondary servers
-	1. Configure and verify the  connection between the Primary and Standby servers to meet the following requirements:
+	1. Configure and verify the connection between the Primary and Standby servers to meet the following requirements:
 		- Two logically separate IP networks: one for the Public Network and one for the Cluster Interconnect.
 		- The Public Network must be a single IP subnet that spans the Primary and Standby servers to enable transparent redirection of the client connection to a single floating IP address.
 		- The Cluster Interconnect should be a single IP subnet that spans the Primary and Standby servers to simplify system setup.
@@ -341,7 +341,7 @@
 
 9. Common Maintenance Tasks
 
-	This section describes how to perform common EXPRESSCLUSTER maintenance tasks using the EXPRESSCLUSTER Manager.
+	This chapter describes how to perform common EXPRESSCLUSTER maintenance tasks using the EXPRESSCLUSTER Manager.
 
 	1. Start Cluster Manager
 
