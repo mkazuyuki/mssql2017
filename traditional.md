@@ -62,7 +62,7 @@
 	| Machine	| OS	| Disk 0 (OS Disk)		| Disk 1 (Data Disk)	|
 	| ----		| ----	| ----				| ----			|
 	| 1		|	| Boot Partition :<br>Size :	| Cluster Partition :<br> Size (>20MB) :<br><br>Data Partition :<br> Size : |
-	| 2		|	| Boot Partition :<br> Size :	| Should be same as Machine 1 |
+	| 2		|	| Boot Partition :<br>Size :	| Should be same as Machine 1 |
 	| 3		|	|				||
 
 	* The size must be large enough to store all data, and log files for a given MSSQL Database to meet current and expected future needs.

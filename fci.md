@@ -2,104 +2,104 @@
 
 1. Overview
 
-	The general procedure to deploy MSSQL Database Server with EXPRESSCLUSTER X on two server machines (Primary and Standby) for high availability of MSSQL Database Server consists of the following major steps:
-
-	1. Perform system planning to determine requirements and specify configuration settings prior to start of actual system installation and configuration. 
-	2. Prepare the Primary and Standby Servers including OS installation and configuration if necessary.
-	3. Install, configure, and verify MSSQL Database Server on the Primary and Standby Servers respectively. If an existing production MSSQL Database Server system exists already then it could be used as the Primary Server without reinstallation of MSSQL Database Server.
-	4. Install and configure EXPRESSCLUSTER Server on the Primary and Standby Servers.
-	5. Create and configure EXPRESSCLUSTER failover group to enable continuous protection and automatic recovery for MSSQL Database Server.
-	6. Upload the configuration file on the server and start the cluster to complete the deployment.
+	This guide describes a way to build two nodes (active standby) SQL Server Always On FCI (Failover Cluster Instances) configuration by ECX.
 
 2. System Requirements and Planning
 
-	2.1. MSSQL Database Server Requirements
-	- SQL Server 2017
+	1. Versions used on verification
 
-	System Requirements
-	- Machine 1: Primary Server
-	- Machine 2: Standby Server
-	- Machine 3: Test Client Machine
-	- Storage as per user requirement
+		- mssql-server-14.0.3006.16-3.x86_64
+		- mssql-tools-14.0.6.0-1.x86_64
+		- EXPRESSCLUSTER X 3.3.5-1
+		- CentOS 7.4 (kernel-3.10.0-693.el7.x86_64)
 
-	|		| Machine 1 Primary Server<br>Machine 2 Standby Server	| Machine 3 Test Machine	|
+	2. License Requirements
+
+	| Products	| Qty	|
+	| ----		| ----	|
+	| SQL Server 2017 on Linux		| 2 |
+	| EXPRESSCLSTER X 3.3			| 2 |
+	| EXPRESSCLSTER X Database Agent 3.3	| 2 |
+
+	3. Server Requirements
+
+		System Requirements
+		- Machine 1: Primary Server
+		- Machine 2: Standby Server
+		- Machine 3: Client Machine
+		- Storage as per user requirement
+
+	|		| Machine 1 Primary Server<br>Machine 2 Standby Server	| Machine 3 Client Machine	|
 	| ---		| ---							| ---				|
 	| CPU		| Processor cores : 2 cores x64				| Pentium 4 -  3.0 GHz or better|
 	| Memory	| 2GB or more						| 512 MB or more		|
 	| Disk 		| 1 physical disk<br>OS partition: 20GB or more space available(to include the installation of MSSQL Database Server)| 1 physical disk with 20 GB or more space available |
 	| OS		| Linux	| Windows XP or later	|
 	| Software	| Java 1.5(or later) enabled web browser	| Java 1.5(or later) enabled web browser	|
-	| Network	| 2 100Mbit or faster Ethernet network interface cards	| 1 100Mbit or faster Ethernet network interface card |
+	| Network	| 2 100Mbit or faster Ethernet NIC	| 1 100Mbit or faster Ethernet NIC |
 
-	2.2. System Planning
+	4. System Planning
 
-	Review the requirements from the last section and then fill out the tables of the worksheet below. Use for reference in the following sections of this guide. See Appendix B for an example worksheet.
-	- Machine 1 Primary Server
-	- Machine 2 Standby Server
-	- Machine 3 Test Client Machine
+		Review the requirements from the last section and then fill out the tables of the worksheet below. Use for reference in the following sections of this guide. See Appendix B for an example worksheet.
+
+		- Machine 1 Primary Server
+		- Machine 2 Standby Server
+		- Machine 3 Client Machine
 
 	Table 1: System Network Configuration
 
-| Machine	| Host name	| Network Connection	| IP Address	| Subnet Mask	| Default Gateway	| Preferred DNS Server	|
-| ---		| ---		| ---			| ---		| ---		| ---			| ---	|
-| 1		|		| Public:<br><br>Interconnect:<br><br>	|	|	|			|	|	
-| 2		| 		| Public:<br><br>Interconnect:<br><br>	|	|	|	
-| 3		|		|			|		|		|			|		|
-
-Floating IP (FIP) address: 
-Web Management Console FIP:   (1) ______________
-Table 2: System OS and Disk Configuration
-Machine	OS	Disk 0 (OS Disk)	Disk 1 (Data Disk)
-1		Boot Partition:
-Size: 	  
-
- *Data Partition:
-    Size:
-2		Boot Partition:
-Size: 	
-3			
-
-* The size must be large enough to store all data, and log files for a given MSSQL Database to meet current and expected future needs.  
-       Table 3: System Logins and Passwords
-	Login	Password
-Machine 1 Administrator		
-Machine 2 Administrator		
-Machine 3 Administrator		
+	| Machine | Host name | Network Connection | IP Address | Subnet Mask | Default Gateway | DNS Server |
+	| ---	| ---	| ---	| ---	| ---	| ---	| ---	|
+	| 1	|	| Public:<br><br>Interconnect:<br><br>	|	|	|	|	|
+	| 2	|	| Public:<br><br>Interconnect:<br><br>	|	|	|	|	|
+	| 3	|	|                                     	|	|	|	|	|
 
 
+	- Floating IP (FIP) address:
+	- Management IP address:
 
+	Table 2: System OS and Disk Configuration
 
- 
+	| Machine	| Disk 0 (OS Disk)		| Disk 1 (Data Disk)	|
+	| ----		| ----				| ----			|
+	| 1		| Boot Partition :<br>Size :	| Data Partition :<br> Size : |
+	| 2		| Boot Partition :<br>Size :	| Shared with Machine 1 |
+	| 3		|				||
+
+	* The size must be large enough to store all data, and log files for a given MSSQL Database to meet current and expected future needs.
+
+	Table 3: System Logins and Passwords
+
+	| 				| Login	| Password	|
+	| ----				| ----	| ----	|
+	| Machine 1 administrator	|	|	|
+	| Machine 2 administrator	|	|	|
+	| Machine 3 administrator	|	|	|
+
 3. Base System Setup
 
-	3.1.	Setup the Primary Server (Machine 1)
+	If necessary, install required hardware components and a supported OS as specified in Chapter 2.
 
-		If necessary, install required hardware components and a supported OS as specified in Chapter 0.
-1. Verify basic system boot and root login functionality and availability of required hardware components as specified in Chapter 0.
-2. Configure network interface names
-	a. Rename the network interface to be used for network communication with client systems to Public. 
-	b. Rename the network interface to be used for internal EXPRESSCLUSTER X management and data mirroring network communication between servers to Interconnect.
-3. Configure network interface Settings:
-a. In the “System” tab go to “Administration” further go to “Network”.
-b. In the Network Connections window, double-click Public.
-c. In the dialog box, click the statically set IP address: option button.
-d. Type the IP address, Subnet mask, and Default gateway values (see Table 1).
-e. Go back to the Network Connections window. Double-click Interconnect.
-f. In the dialog box, click the statically set IP address: option button.
-g. Type the IP address and Subnet mask values (see Table 1).
-Click OK. 
-h. On the terminal, run the command “service network restart”.
+	1. Setup the Primary Server (Machine 1)
+		1. Verify basic system boot and root login functionality and availability of required hardware components as specified in Chapter 2.
+		2. Configure network interface names
+			1. Rename the network interface to be used for network communication with client machine to Public.
+			2. Rename the network interface to be used for internal EXPRESSCLUSTER X management and data mirroring network communication between servers to Interconnect.
+		3. Configure Network
+			1. In the `System` tab go to `Administration` further go to `Network`.
+			2. In the Network Connections window, double-click Public.
+			3. In the dialog box, click the statically set IP address: option button.
+			4. Type the IP address, Subnet mask, and Default gateway values (see Table 1).
+			5. Go back to the Network Connections window. Double-click Interconnect.
+			6. In the dialog box, click the statically set IP address: option button.
+			7. Type the IP address and Subnet mask values (see Table 1).
+			8. Click OK.
+			9. On the terminal, run the command `service network restart`.
 
-	3.2. Setup the Standby Server (Machine 2)
+	2. Setup the Standby Server (Machine 2)
+		- Perform above steps in *Section 3* on the Standby Server.
 
-		Perform steps 1-3 in Section 3.1 on the Standby Server
- 
 4. MSSQL Server Installation
-
-	Version of the software’s used for creating this Guide:
-
-Cent operating systems -> 7.4(3.10.0-693.el7.x86_64)
-Cent operating systems -> CentOS / MSSQL 2017
 
 4.1. Installing MSSQL  on Primary Server
 
