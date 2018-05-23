@@ -15,11 +15,11 @@
 
 	2. License Requirements
 
-	| Products	| Qty	|
-	| ----		| ----	|
-	| SQL Server 2017 on Linux		| 2 |
-	| EXPRESSCLSTER X 3.3			| 2 |
-	| EXPRESSCLSTER X Database Agent 3.3	| 2 |
+		| Products	| Qty	|
+		| ----		| ----	|
+		| SQL Server 2017 on Linux		| 2 |
+		| EXPRESSCLSTER X 3.3			| 2 |
+		| EXPRESSCLSTER X Database Agent 3.3	| 2 |
 
 	3. Server Requirements
 
@@ -29,14 +29,14 @@
 		- Machine 3: Client Machine
 		- Storage as per user requirement
 
-	|		| Machine 1 Primary Server<br>Machine 2 Standby Server	| Machine 3 Client Machine	|
-	| ---		| ---							| ---				|
-	| CPU		| Processor cores : 2 cores x64				| Pentium 4 -  3.0 GHz or better|
-	| Memory	| 2GB or more						| 512 MB or more		|
-	| Disk 		| 1 physical disk<br>OS partition: 20GB or more space available(to include the installation of MSSQL Database Server)| 1 physical disk with 20 GB or more space available |
-	| OS		| Linux	| Windows XP or later	|
-	| Software	| Java 1.5(or later) enabled web browser	| Java 1.5(or later) enabled web browser	|
-	| Network	| 2 100Mbit or faster Ethernet NIC	| 1 100Mbit or faster Ethernet NIC |
+		|		| Machine 1 Primary Server<br>Machine 2 Standby Server	| Machine 3 Client Machine	|
+		| ---		| ---							| ---				|
+		| CPU		| Processor cores : 2 cores x64				| Pentium 4 -  3.0 GHz or better|
+		| Memory	| 2GB or more						| 512 MB or more		|
+		| Disk 		| 1 physical disk<br>OS partition: 20GB or more space available(to include the installation of MSSQL Database Server)| 1 physical disk with 20 GB or more space available |
+		| OS		| Linux	| Windows XP or later	|
+		| Software	| Java 1.5(or later) enabled web browser	| Java 1.5(or later) enabled web browser	|
+		| Network	| 2 100Mbit or faster Ethernet NIC	| 1 100Mbit or faster Ethernet NIC |
 
 	4. System Planning
 
@@ -46,35 +46,35 @@
 		- Machine 2 Standby Server
 		- Machine 3 Client Machine
 
-	Table 1: System Network Configuration
+		Table 1: System Network Configuration
 
-	| Machine | Host name | Network Connection | IP Address | Subnet Mask | Default Gateway | DNS Server |
-	| ---	| ---	| ---	| ---	| ---	| ---	| ---	|
-	| 1	|	| Public:<br><br>Interconnect:<br><br>	|	|	|	|	|
-	| 2	|	| Public:<br><br>Interconnect:<br><br>	|	|	|	|	|
-	| 3	|	|                                     	|	|	|	|	|
+		| Machine | Host name | Network Connection | IP Address | Subnet Mask | Default Gateway | DNS Server |
+		| ---	| ---	| ---	| ---	| ---	| ---	| ---	|
+		| 1	|	| Public:<br><br>Interconnect:<br><br>	|	|	|	|	|
+		| 2	|	| Public:<br><br>Interconnect:<br><br>	|	|	|	|	|
+		| 3	|	|                                     	|	|	|	|	|
 
 
-	- Floating IP (FIP) address:
-	- Management IP address:
+		- Floating IP (FIP) address:
+		- Management IP address:
 
-	Table 2: System OS and Disk Configuration
+		Table 2: System OS and Disk Configuration
 
-	| Machine	| Disk 0 (OS Disk)		| Disk 1 (Data Disk)	|
-	| ----		| ----				| ----			|
-	| 1		| Boot Partition :<br>Size :	| Data Partition :<br> Size : |
-	| 2		| Boot Partition :<br>Size :	| Shared with Machine 1 |
-	| 3		|				||
+		| Machine	| OS	| Disk 0 (OS Disk)		| Disk 1 (Data Disk)	|
+		| ----		| ----	| ----				| ----			|
+		| 1		|	| Boot Partition :<br>Size :	| * Data Partition :<br> Size : |
+		| 2		|	| Boot Partition :<br>Size :	| Shared with Machine 1 |
+		| 3		|	|				||
 
-	* The size must be large enough to store all data, and log files for a given MSSQL Database to meet current and expected future needs.
+		\* The size must be large enough to store all data, and log files for a given MSSQL Database to meet current and expected future needs.
 
-	Table 3: System Logins and Passwords
+		Table 3: System Logins and Passwords
 
-	| 				| Login	| Password	|
-	| ----				| ----	| ----	|
-	| Machine 1 administrator	|	|	|
-	| Machine 2 administrator	|	|	|
-	| Machine 3 administrator	|	|	|
+		| 				| Login	| Password	|
+		| ----				| ----	| ----	|
+		| Machine 1 administrator	|	|	|
+		| Machine 2 administrator	|	|	|
+		| Machine 3 administrator	|	|	|
 
 3. Base System Setup
 
@@ -97,7 +97,7 @@
 			9. On the terminal, run the command `service network restart`.
 
 	2. Setup the Standby Server (Machine 2)
-		- Perform above steps in *Section 3* on the Standby Server.
+		- Perform above steps in *Chapter 3* on the Standby Server.
 
 4. MSSQL Server Installation
 
@@ -411,7 +411,7 @@
 
 		1. Start Cluster Manager. (Section 10.1)
 		2. In the Cluster Manager window, change to Config Mode.
-		3. Click the %cluster name% and then right-click Properties. 
+		3. Click the %cluster name% and then right-click Properties.
 		4. Click the Auto Recovery tab. To manually return the server to the cluster, select Off for the Auto Return option. Otherwise, leave it set to On for automatic recovery when the server is turned back on. Click OK.
 		5. If a change was made, upload the configuration file.
 		6. Shut down the server to be isolated for maintenance.
@@ -419,7 +419,7 @@
 
 	5. Return an isolated server to the cluster
 
-		Start with the server that was isolated in the steps listed above ("Isolate a server for maintenance"). 
+		Start with the server that was isolated in the steps listed above ("Isolate a server for maintenance").
 
 		1. Automatic Recovery
 
@@ -485,9 +485,9 @@
 	| 2  | Linux | Boot Partition: /dev/sda1<br>Size: 75GB | Same as Machine 1 |
 	| 3  | Win XP SP1 or later | C: 20 GB ||
 
-	* Must be a raw partition and larger than 17MB.
+	\* Must be a raw partition and larger than 17MB.
 
-	Floating IP (FIP) address: 
+	Floating IP (FIP) address:
 
 	Web Management Console FIP:      (1) 10.0.7.125
 
