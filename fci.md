@@ -156,7 +156,7 @@
 
 		1. Install the EXPRESSCLUSTER Server RPM on all server(s) that constitute the cluster by following the procedures below.
 
-		Note: Log in as root user when installing the EXPRESSCLUSTER Server RPM.
+		**Note**: Log in as root user when installing the EXPRESSCLUSTER Server RPM.
 
 		2. Mount the installation CD-ROM.
 
@@ -166,17 +166,17 @@
 
 		4. When the installation is completed, unmount the installation CD-ROM.
 
-		5. License Registration: Log on to the master server as root user and run the following command:
+		5. License Registration: Log on to the master server as root user and run the following command.
 
-		6. clplcnsc -i <filepath> -p <PRODUCT-ID>
+				clplcnsc -i <filepath> -p <PRODUCT-ID>
 
-		7. When the command is successfully executed, the message "Command succeeded." is displayed in the console
+			When the command is successfully executed, the message "Command succeeded." is displayed in the console
 
-		Note: Here, specify the filepath to the license file by the -i option & the productID by the -p option.
+			**Note**: Here, specify the filepath to the license file by the -i option & the productID by the -p option.
 
-		8. For Base License: Enter the product ID as BASE33.  Here 33 is the EC version & this number will vary as per the EC deployed. Example for EC2.1 version, command param would become BASE21. The Base license needs to be applied on only one server
+			For Base License: Enter the product ID as BASE33.  Here 33 is the EC version & this number will vary as per the EC deployed. Example for EC2.1 version, command param would become BASE21. The Base license needs to be applied on only one server
 
-		Note: For registering the license from the command line refer to EXPRESSCLUSTER, Installation and Configuration Guide.
+			**Note**: For registering the license from the command line refer to EXPRESSCLUSTER, Installation and Configuration Guide.
 
 	2. Restart the Primary and Standby Servers (Machines 1 & 2)
 
@@ -275,7 +275,7 @@
 
 		2. Use mssql-conf to change the default data directory with the set command
 
-			sudo /opt/mssql/bin/mssql-conf set filelocation.defaultdatadir /mssql/data
+				sudo /opt/mssql/bin/mssql-conf set filelocation.defaultdatadir /mssql/data
 
 		3. Restart the SQL Server service
 
@@ -387,12 +387,13 @@
 
 		1. Reboot all servers
 
-			1. Start Cluster Manager. (Section 10.1)
+			1. Start Cluster Manager. (Chapter 10, Section 1)
 			2. On the left hand side, right click on Cluster name and choose "Reboot".
 
 		2. Shutdown all servers
 
-			- Same as "Reboot all servers," except in step 2 click Shutdown.
+			- Same as "Reboot all servers", except in step 2 click Shutdown.
+
 		3. Shutdown one server
 
 			1. Start Cluster Manager.( Chapter 10, Section 1)
@@ -409,7 +410,7 @@
 
 	4. Isolate a server for maintenance
 
-		1. Start Cluster Manager. (Section 10.1)
+		1. Start Cluster Manager. (Chapter 10, Section 1)
 		2. In the Cluster Manager window, change to Config Mode.
 		3. Click the %cluster name% and then right-click Properties.
 		4. Click the Auto Recovery tab. To manually return the server to the cluster, select Off for the Auto Return option. Otherwise, leave it set to On for automatic recovery when the server is turned back on. Click OK.
@@ -457,9 +458,7 @@
 
 	This completes the uninstall process for an individual server system.
 
-	**Note**
-
-	You must be logged on as a root or an account with administrator privileges to uninstall Express Cluster Server.
+	**Note**: You must be logged on as a root or an account with administrator privileges to uninstall Express Cluster Server.
 
 	If a shared disk is used, unplug all disk cables connected to the server after un-installation is completed.
 
